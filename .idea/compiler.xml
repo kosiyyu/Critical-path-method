@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Critical path method" />
+        <module name="criticalpathmethod" />
       </profile>
     </annotationProcessing>
   </component>
