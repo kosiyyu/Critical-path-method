@@ -1,5 +1,6 @@
 package org.cpm;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -76,4 +77,34 @@ public class MatrixOfPredecessors {
             activityId++;
         }
     }
+
+    public List<Integer> findNoPredecessorActivities(){
+        List<Integer> indexOfFirstActivities = new ArrayList<>();
+        for(int i = 0; i < matrix.length; i++ )
+        {
+            int count = 0;
+            for(int j = 0; j < matrix[0].length; j++)
+            {
+                if(matrix[i][j] == 0)
+                    count++;
+            }
+            if(count == matrix[0].length)
+                indexOfFirstActivities.add(i);
+        }
+        return indexOfFirstActivities;
+    }
+
+    public List<Integer> findQuantityOfPredecessorActivities(int row){
+        List<Integer> quantityOfPredecessorActivities = new ArrayList<>();
+        for(int i = 0; i < matrix[0].length; i++ )
+        {
+            if(matrix[row][i] == 1)
+                quantityOfPredecessorActivities.add(i);
+        }
+        return quantityOfPredecessorActivities;
+    }
+
+
+
+
 }

@@ -44,4 +44,14 @@ public class Activity {
     public void setDuration(double duration) {
         this.duration = duration;
     }
+
+    @Override
+    public String toString() {
+        return "Activity{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", Predecessor='" + Predecessor + '\'' +
+                ", duration=" + duration +
+                '}';
+    }
 }

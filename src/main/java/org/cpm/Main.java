@@ -21,6 +21,12 @@ public class Main {
 
         MatrixOfPredecessors matrixOfPredecessors = new MatrixOfPredecessors(activitiesUser.getActivities());
         matrixOfPredecessors.printMatrix();
+        //matrixOfPredecessors.findNoPredecessorActivities().forEach(System.out::println);
+        //matrixOfPredecessors.findQuantityOfPredecessorActivities(7).forEach(System.out::println);
+        ActivityFlowList activityFlowList  = new ActivityFlowList();
+        activityFlowList.logic(activitiesUser, matrixOfPredecessors);
+        activityFlowList.print();
+
 
 
 //        DirectedGraph graph = new DirectedGraph(5);
