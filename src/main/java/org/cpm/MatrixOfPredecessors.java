@@ -22,14 +22,14 @@ public class MatrixOfPredecessors {
         }
         for (Activity activity : activities) {
             String precedessors[] = activity.getPredecessor().split(",");
-            for(String a: precedessors)
-            {
-                System.out.print(a + " " + precedessors[0].length() + " " + precedessors[0]);
-            }
-            System.out.println();
-            if (precedessors[0].equals('-')) {
+            ///for(String a: precedessors)
+            //{
+              //  System.out.print(a + " " + precedessors[0].length() + " " + precedessors[0]);
+            //}
+            //System.out.println();
+            if (precedessors[0].trim().equalsIgnoreCase("-")) {
                 //matrix[index][pos] = -1;
-                System.out.println("stop");
+                //System.out.println("stop");
                 index++;
                 continue;
             }
@@ -54,6 +54,8 @@ public class MatrixOfPredecessors {
             if(i == 0)
             {
                 for ( int z = 0; z < siz; z++) {
+                    if(z == 0)
+                        System.out.print("  ");
                     char act = (char)(activityTmp + z);
                     System.out.print(act + " ");
                 }
@@ -63,13 +65,14 @@ public class MatrixOfPredecessors {
             {
                 if(j == 0)
                 {
-                    System.out.print(activityId + " " + matrix[i][j]);
+                    System.out.print(activityId + " " + matrix[i][j] + " ");
                 }
                 else
                 {
                     System.out.print(matrix[i][j] + " ");
                 }
             }
+            System.out.println();
             activityId++;
         }
     }

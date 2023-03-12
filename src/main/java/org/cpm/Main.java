@@ -20,7 +20,7 @@ public class Main {
         activitiesUser.printActivitiesList();
 
         MatrixOfPredecessors matrixOfPredecessors = new MatrixOfPredecessors(activitiesUser.getActivities());
-        //matrixOfPredecessors.printMatrix();
+        matrixOfPredecessors.printMatrix();
 
 
 //        DirectedGraph graph = new DirectedGraph(5);
