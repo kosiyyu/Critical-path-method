@@ -45,13 +45,20 @@ public class Activity {
         this.duration = duration;
     }
 
-    @Override
-    public String toString() {
+    public String _toString() {
         return "Activity{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", Predecessor='" + Predecessor + '\'' +
                 ", duration=" + duration +
+                '}';
+    }
+
+    @Override
+    public String toString() {
+        return "Activity{" +
+                "id='" + id + '\'' +
+                ", Predecessor='" + Predecessor + '\'' +
                 '}';
     }
 }

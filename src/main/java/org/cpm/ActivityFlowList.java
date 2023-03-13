@@ -2,10 +2,11 @@ package org.cpm;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @AllArgsConstructor
@@ -24,33 +25,49 @@ public class ActivityFlowList {
 
     public void logic(ActivitesList activitesList, MatrixOfPredecessors matrixOfPredecessors){
         //matrixOfPredecessors.findNoPredecessorActivities()
-
+        Map<String, Integer> map = new HashMap<>();
         Event startingEvent = new Event(1);
-        List<Activity> startActivities = new ArrayList<>();
+        List<Integer> startActivities = new ArrayList<>();
         for(int i : matrixOfPredecessors.findNoPredecessorActivities()){
             activityFlowList.add(new ActivityFlow(activitesList.getActivities().get(i), startingEvent,null));
+            startActivities.add(i);
+            map.put(activitesList.getActivities().get(i).getPredecessor(), 1);
         }
 
-        //todo: not working properly
         List<Integer> restActivities = new ArrayList<>();
-        for(int i = 0; i < matrixOfPredecessors.getMatrix().length - 1; i++){
+        for(int i = 0; i < matrixOfPredecessors.getMatrix().length; i++){
             restActivities.add(i);
         }
-        for(int i : matrixOfPredecessors.findNoPredecessorActivities()){
-            restActivities.remove(i);
-        }
+        restActivities.removeAll(startActivities);
 
+        //todo: not working properly
         int eventIndex = 2;
+//        for(int i : restActivities){
+//            //System.out.println(i + " " + matrixOfPredecessors.findQuantityOfPredecessorActivities(i).size() + " " + eventIndex);
+////            System.out.println(matrixOfPredecessors.findQuantityOfPredecessorActivities(i));
+////            System.out.println("//");
+//            //System.out.println(i);
+//            for(int j : matrixOfPredecessors.findQuantityOfPredecessorActivitiesRow(i)){
+//                if(map.containsKey(activitesList.getActivities().get(i).getPredecessor())){
+//                    activityFlowList.add(new ActivityFlow(activitesList.getActivities().get(i), new Event(i), null));
+//                    continue;
+//                }
+//                activityFlowList.add(new ActivityFlow(activitesList.getActivities().get(i), new Event(eventIndex), null));
+//                map.put(activitesList.getActivities().get(i).getPredecessor(), eventIndex);
+//            }
+//            eventIndex++;
+//        }
+
         for(int i : restActivities){
-            for(int j : matrixOfPredecessors.findQuantityOfPredecessorActivities(i)){
-                activityFlowList.add(new ActivityFlow(activitesList.getActivities().get(j), new Event(eventIndex), null));
+            if(map.containsKey(activitesList.getActivities().get(i).getPredecessor())){
+                activityFlowList.add(new ActivityFlow(activitesList.getActivities().get(i), new Event(map.get(activitesList.getActivities().get(i).getPredecessor())), null));
             }
-            eventIndex++;
+            else{
+                activityFlowList.add(new ActivityFlow(activitesList.getActivities().get(i), new Event(eventIndex), null));
+                map.put(activitesList.getActivities().get(i).getPredecessor(), eventIndex);
+                eventIndex++;
+            }
         }
-
-
-
-
-
+        activityFlowList.add(new ActivityFlow(new Activity(null, null, null, 0), new Event(eventIndex), new Event(eventIndex)));
     }
 }

@@ -94,11 +94,21 @@ public class MatrixOfPredecessors {
         return indexOfFirstActivities;
     }
 
-    public List<Integer> findQuantityOfPredecessorActivities(int row){
+    public List<Integer> findQuantityOfPredecessorActivitiesRow(int row){
         List<Integer> quantityOfPredecessorActivities = new ArrayList<>();
         for(int i = 0; i < matrix[0].length; i++ )
         {
             if(matrix[row][i] == 1)
+                quantityOfPredecessorActivities.add(i);
+        }
+        return quantityOfPredecessorActivities;
+    }
+
+    public List<Integer> findQuantityOfPredecessorActivitiesColumn(int col){
+        List<Integer> quantityOfPredecessorActivities = new ArrayList<>();
+        for(int i = 0; i < matrix[0].length; i++ )
+        {
+            if(matrix[i][col] == 1)
                 quantityOfPredecessorActivities.add(i);
         }
         return quantityOfPredecessorActivities;

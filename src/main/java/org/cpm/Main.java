@@ -23,9 +23,11 @@ public class Main {
         matrixOfPredecessors.printMatrix();
         //matrixOfPredecessors.findNoPredecessorActivities().forEach(System.out::println);
         //matrixOfPredecessors.findQuantityOfPredecessorActivities(7).forEach(System.out::println);
+        //matrixOfPredecessors.findQuantityOfPredecessorActivitiesColumn(0).forEach(System.out::println);
         ActivityFlowList activityFlowList  = new ActivityFlowList();
         activityFlowList.logic(activitiesUser, matrixOfPredecessors);
         activityFlowList.print();
+
 
 
 
