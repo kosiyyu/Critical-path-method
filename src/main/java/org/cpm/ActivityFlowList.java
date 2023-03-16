@@ -68,6 +68,29 @@ public class ActivityFlowList {
                 eventIndex++;
             }
         }
-        activityFlowList.add(new ActivityFlow(new Activity(null, null, null, 0), new Event(eventIndex), new Event(eventIndex)));
+        //activityFlowList.add(new ActivityFlow(new Activity(null, null, null, 0), new Event(eventIndex), new Event(eventIndex)));
+        //for( ActivityFlow activityRow : activityFlowList ) {
+
+        //}
+        List<Integer> activityList;
+        List<Integer> endActivityList = new ArrayList<>();
+        for(int index = 0; index < activityFlowList.size(); index++)
+        {
+            activityList = matrixOfPredecessors.findQuantityOfPredecessorActivitiesColumn(index);
+
+            if(!activityList.isEmpty())
+                activityFlowList.get(index).setEventEnd(activityFlowList.get(activityList.get(0)).getEventStart());
+            else
+                endActivityList.add(index);
+        }
+
+        for(int indexActivity : endActivityList)
+        {
+                activityFlowList.get(indexActivity).setEventEnd(new Event(eventIndex));
+        }
+
+
+
+
     }
 }
