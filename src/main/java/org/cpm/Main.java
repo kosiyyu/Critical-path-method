@@ -50,5 +50,16 @@ public class Main {
 //        System.out.println("---------------------");
 //
 //        graph.printMatrix();
+
+        PathFinder pathFinder = new PathFinder(activityFlowList);
+
+
+        List<List<Activity>> allPaths = pathFinder.getAllPaths(activities.get(0), activities.get(7));
+
+        System.out.println(allPaths.size());
+
+
+
+
     }
 }
