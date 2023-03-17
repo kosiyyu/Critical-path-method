@@ -42,6 +42,8 @@ class ActivityFlowListTest {
         activityFlowListResultExpected.add(new ActivityFlow(activities.get(6), new Event(4), new Event(6)));
         activityFlowListResultExpected.add(new ActivityFlow(activities.get(7), new Event(5), new Event(6)));
 
+        System.out.println("lelel");
+
         assertEquals(activityFlowListResultExpected, activityFlowList.getActivityFlowList());
     }
 }
