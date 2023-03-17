@@ -1,4 +1,8 @@
-package org.cpm;
+package org.cpm.logic;
+
+import org.cpm.base.Activity;
+import org.cpm.base.ActivityFlow;
+import org.cpm.base.Event;
 
 import java.util.*;
 

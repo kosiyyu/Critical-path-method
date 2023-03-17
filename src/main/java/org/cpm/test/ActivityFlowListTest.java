@@ -1,5 +1,11 @@
-package org.cpm;
+package org.cpm.test;
 
+import org.cpm.base.ActivitiesList;
+import org.cpm.base.Activity;
+import org.cpm.base.ActivityFlow;
+import org.cpm.base.Event;
+import org.cpm.logic.ActivityFlowList;
+import org.cpm.logic.MatrixOfPredecessors;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -24,7 +30,7 @@ class ActivityFlowListTest {
         activities.add(new Activity("G", "sporzadzenie dokumentacji", "C", 2));
         activities.add(new Activity("H", "pierwsza partia produkcji seryjnej", "E,D,F", 5));
 
-        ActivitesList activitiesUser = new ActivitesList(activities);
+        ActivitiesList activitiesUser = new ActivitiesList(activities);
 
         MatrixOfPredecessors matrixOfPredecessors = new MatrixOfPredecessors(activitiesUser.getActivities());
 

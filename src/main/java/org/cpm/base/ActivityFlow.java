@@ -1,8 +1,10 @@
-package org.cpm;
+package org.cpm.base;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.cpm.base.Activity;
+import org.cpm.base.Event;
 
 @Data
 @NoArgsConstructor

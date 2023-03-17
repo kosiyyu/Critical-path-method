@@ -1,4 +1,6 @@
-package org.cpm;
+package org.cpm.logic;
+
+import org.cpm.base.Activity;
 
 import java.util.ArrayList;
 import java.util.List;

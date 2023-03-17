@@ -1,4 +1,4 @@
-package org.cpm;
+package org.cpm.base;
 
 
 import lombok.AllArgsConstructor;

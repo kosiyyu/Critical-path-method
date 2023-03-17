@@ -1,4 +1,4 @@
-package org.cpm;
+package org.cpm.old;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

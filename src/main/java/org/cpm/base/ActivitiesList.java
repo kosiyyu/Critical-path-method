@@ -1,14 +1,13 @@
-package org.cpm;
+package org.cpm.base;
 
-import java.util.ArrayList;
+import org.cpm.base.Activity;
+
 import java.util.List;
 
-public class ActivitesList {
+public class ActivitiesList {
     private List<Activity> activities;
 
-
-
-    public ActivitesList(List<Activity> activities) {
+    public ActivitiesList(List<Activity> activities) {
         this.activities = activities;
     }
 
