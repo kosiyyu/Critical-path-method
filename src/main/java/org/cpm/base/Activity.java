@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class Activity {
     private String id;
     private String name;
-    private String Predecessor;
+        private String Predecessor;
     private double duration;
 
     public String toString() {
@@ -20,5 +20,9 @@ public class Activity {
                 ", Predecessor='" + Predecessor + '\'' +
                 ", duration=" + duration +
                 '}';
+    }
+
+    public String _toString() {
+        return "Act " + id;
     }
 }

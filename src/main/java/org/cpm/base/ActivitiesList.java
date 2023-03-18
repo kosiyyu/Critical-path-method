@@ -40,4 +40,6 @@ public class ActivitiesList {
             System.out.println(activity.getId() + " " + activity.getName() + " " + activity.getPredecessor() + " " + activity.getDuration());
         }
     }
+
+
 }

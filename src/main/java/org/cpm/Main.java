@@ -1,10 +1,8 @@
 package org.cpm;
 
-import org.cpm.base.ActivitiesList;
-import org.cpm.base.Activity;
+import org.cpm.base.*;
 import org.cpm.logic.ActivityFlowList;
 import org.cpm.logic.MatrixOfPredecessors;
-import org.cpm.logic.PathFinder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,30 +21,68 @@ public class Main {
         activities.add(new Activity("H", "pierwsza partia produkcji seryjnej", "E,D,F", 5));
 
         ActivitiesList activitiesUser = new ActivitiesList(activities);
-        activitiesUser.printActivitiesList();
 
         MatrixOfPredecessors matrixOfPredecessors = new MatrixOfPredecessors(activitiesUser.getActivities());
-        matrixOfPredecessors.printMatrix();
 
         ActivityFlowList activityFlowList = new ActivityFlowList();
         activityFlowList.logic(activitiesUser, matrixOfPredecessors);
-        activityFlowList.print();
 
-        PathFinder pathFinder = new PathFinder(activityFlowList);
+        List<Event> vertices = new ArrayList<>();
+        List<Activity> edges = new ArrayList<>();
 
-        System.out.println("---------------------");
+        for (ActivityFlow activityFlow : activityFlowList.getActivityFlowList()) {
+            if (!vertices.contains(activityFlow.getEventStart())) {
+                vertices.add(activityFlow.getEventStart());
+            }
+            if (activityFlow.getEventEnd() != null && !vertices.contains(activityFlow.getEventEnd())) {
+                vertices.add(activityFlow.getEventEnd());
+            }
 
-        activities.forEach(System.out::println);
-        List<List<Activity>> allPaths = pathFinder.getAllPaths(
-                activities.stream()
-                .filter(i -> i.getId() == "A")
-                .findFirst()
-                .get(),
-                activities.stream()
-                .filter(i -> i.getId() == "H")
-                .findFirst().get());
+            if (activityFlow.getEventEnd() != null) {
+                edges.add(new Activity(
+                        activityFlow.getActivity().getId(),
+                        activityFlow.getActivity().getName(),
+                        activityFlow.getEventStart().getId() + "",
+                        activityFlow.getActivity().getDuration()
+                ));
+            }
+        }
 
-        allPaths.forEach(System.out::println);
+        List<Vertex> verticesList = new ArrayList<>();
+
+        Vertex a = new Vertex("A");
+        Vertex b = new Vertex("B");
+        Vertex c = new Vertex("C");
+        Vertex d = new Vertex("D");
+        Vertex e = new Vertex("E");
+
+        Edge ab = new Edge(a, b, 1);
+        Edge ac = new Edge(a, c, 2);
+        Edge bc = new Edge(b, c, 3);
+        Edge cd = new Edge(c, d, 4);
+        Edge de = new Edge(d, e, 5);
+
+
+        a.addEdge(ab);
+        a.addEdge(ac);
+        b.addEdge(bc);
+        c.addEdge(cd);
+        d.addEdge(de);
+
+        Graph graph = new Graph();
+        graph.addVertex(a);
+        graph.addVertex(b);
+        graph.addVertex(c);
+        graph.addVertex(d);
+        graph.addVertex(e);
+
+        List<List<Vertex>> paths = graph.findAllPaths(a, e);
+
+        for (List<Vertex> path : paths) {
+            path.forEach(i -> System.out.print(i.__toString()));
+            System.out.println();
+        }
+
 
 
 

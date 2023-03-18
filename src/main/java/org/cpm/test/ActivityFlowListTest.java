@@ -19,7 +19,7 @@ class ActivityFlowListTest {
 
     @Test
     void logic() {
-        List<Activity> activities = new ArrayList<Activity>();
+        List<Activity> activities = new ArrayList<>();
 
         activities.add(new Activity("A", "opracowanie zalozen konstrukcyjnych", "-", 5));
         activities.add(new Activity("B", "analiza propozycji uruchomienia nowej produkcji", "-", 7));

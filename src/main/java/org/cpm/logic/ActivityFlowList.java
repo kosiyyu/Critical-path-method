@@ -27,7 +27,6 @@ public class ActivityFlowList {
     }
 
     public void logic(ActivitiesList activitiesList, MatrixOfPredecessors matrixOfPredecessors){
-        //matrixOfPredecessors.findNoPredecessorActivities()
         Map<String, Integer> map = new HashMap<>();
         Event startingEvent = new Event(1);
         List<Integer> startActivities = new ArrayList<>();
@@ -72,9 +71,6 @@ public class ActivityFlowList {
         {
                 activityFlowList.get(indexActivity).setEventEnd(new Event(eventIndex));
         }
-
-
-
-
     }
+
 }
