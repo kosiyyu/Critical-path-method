@@ -40,7 +40,6 @@ public class ActivityFlowList {
         }
         restActivities.removeAll(startActivities);
 
-        //todo: not working properly
         int eventIndex = 2;
 //        for(int i : restActivities){
 //            //System.out.println(i + " " + matrixOfPredecessors.findQuantityOfPredecessorActivities(i).size() + " " + eventIndex);

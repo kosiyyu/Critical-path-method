@@ -21,12 +21,16 @@ public class Main {
 
         MatrixOfPredecessors matrixOfPredecessors = new MatrixOfPredecessors(activitiesUser.getActivities());
         matrixOfPredecessors.printMatrix();
+
+        PathList pathList = new PathList();
         //matrixOfPredecessors.findNoPredecessorActivities().forEach(System.out::println);
         //matrixOfPredecessors.findQuantityOfPredecessorActivities(7).forEach(System.out::println);
         //matrixOfPredecessors.findQuantityOfPredecessorActivitiesColumn(0).forEach(System.out::println);
         ActivityFlowList activityFlowList  = new ActivityFlowList();
         activityFlowList.logic(activitiesUser, matrixOfPredecessors);
         activityFlowList.print();
+
+        pathList.generatePathsDFS(activityFlowList);
 
 
 
