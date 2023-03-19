@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class Activity {
     private String id;
     private String name;
-        private String Predecessor;
+    private String Predecessor;
     private double duration;
 
     public String toString() {

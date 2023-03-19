@@ -1,7 +1,6 @@
 package org.cpm.base;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,26 +9,25 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Edge {
+
+    private String id;
+    private String stringValue;
+    private double numericalValue;
     private Vertex source;
-
     private Vertex target;
-
-    private int weight;
-
-    public Vertex getSource() {
-        return source;
-    }
 
     @Override
     public String toString() {
         return "Edge{" +
-                "source name=" + source.getName() +
-                ", target name=" + target.getName() +
-                ", weight=" + weight +
+                "id='" + id + '\'' +
+                ", stringValue='" + stringValue + '\'' +
+                ", numericalValue=" + numericalValue +
+                ", source=" + source +
+                ", target=" + target +
                 '}';
     }
 
     public String _toString() {
-        return "Edge " + source.getName() + " " + target.getName() + " " + weight;
+        return "Edge " + id + " " + stringValue + " " + numericalValue + " " + source.getId() + " " + target.getId();
     }
 }

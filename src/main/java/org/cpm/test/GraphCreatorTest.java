@@ -4,7 +4,7 @@ import org.cpm.base.ActivitiesList;
 import org.cpm.base.Activity;
 import org.cpm.base.ActivityFlow;
 import org.cpm.base.Event;
-import org.cpm.logic.ActivityFlowList;
+import org.cpm.logic.GraphCreator;
 import org.cpm.logic.MatrixOfPredecessors;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +13,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ActivityFlowListTest {
+class GraphCreatorTest {
 
 
 
@@ -34,8 +34,8 @@ class ActivityFlowListTest {
 
         MatrixOfPredecessors matrixOfPredecessors = new MatrixOfPredecessors(activitiesUser.getActivities());
 
-        ActivityFlowList activityFlowList  = new ActivityFlowList();
-        activityFlowList.logic(activitiesUser, matrixOfPredecessors);
+        GraphCreator graphCreator = new GraphCreator();
+        graphCreator.logic(activitiesUser, matrixOfPredecessors);
 
         List<ActivityFlow> activityFlowListResultExpected = new ArrayList<>();
 
@@ -48,6 +48,6 @@ class ActivityFlowListTest {
         activityFlowListResultExpected.add(new ActivityFlow(activities.get(6), new Event(4), new Event(6)));
         activityFlowListResultExpected.add(new ActivityFlow(activities.get(7), new Event(5), new Event(6)));
 
-        assertEquals(activityFlowListResultExpected, activityFlowList.getActivityFlowList());
+        assertEquals(activityFlowListResultExpected, graphCreator.getActivityFlowList());
     }
 }

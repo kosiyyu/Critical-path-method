@@ -1,7 +1,7 @@
 package org.cpm;
 
 import org.cpm.base.*;
-import org.cpm.logic.ActivityFlowList;
+import org.cpm.logic.GraphCreator;
 import org.cpm.logic.MatrixOfPredecessors;
 
 import java.util.ArrayList;
@@ -9,6 +9,7 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
+
         List<Activity> activities = new ArrayList<>();
 
         activities.add(new Activity("A", "opracowanie zalozen konstrukcyjnych", "-", 5));
@@ -24,59 +25,64 @@ public class Main {
 
         MatrixOfPredecessors matrixOfPredecessors = new MatrixOfPredecessors(activitiesUser.getActivities());
 
-        ActivityFlowList activityFlowList = new ActivityFlowList();
-        activityFlowList.logic(activitiesUser, matrixOfPredecessors);
+        GraphCreator graphCreator = new GraphCreator();
+        graphCreator.logic(activitiesUser, matrixOfPredecessors);
+        graphCreator.getActivityFlowList();
 
-        List<Event> vertices = new ArrayList<>();
-        List<Activity> edges = new ArrayList<>();
+        GraphCreator.Pair pair = graphCreator.getPair();
+        System.out.println(pair.getActivityList().size());
+        System.out.println(pair.getEventList().size());
 
-        for (ActivityFlow activityFlow : activityFlowList.getActivityFlowList()) {
-            if (!vertices.contains(activityFlow.getEventStart())) {
-                vertices.add(activityFlow.getEventStart());
-            }
-            if (activityFlow.getEventEnd() != null && !vertices.contains(activityFlow.getEventEnd())) {
-                vertices.add(activityFlow.getEventEnd());
-            }
+        //First we add all vertexes to vertexList
+        List<Vertex> vertexList = new ArrayList<>();
+        pair.getEventList().forEach(event -> vertexList.add(new Vertex(event.getId())));
+        vertexList.add(new Vertex(vertexList.size()));
 
-            if (activityFlow.getEventEnd() != null) {
-                edges.add(new Activity(
-                        activityFlow.getActivity().getId(),
-                        activityFlow.getActivity().getName(),
-                        activityFlow.getEventStart().getId() + "",
-                        activityFlow.getActivity().getDuration()
-                ));
-            }
+        //Then add all edges to vertexes in vertexList
+        for (ActivityFlow activityFlow : graphCreator.getActivityFlowList()) {
+            //activityFlow.getEventStart().getId()
+            vertexList.stream()
+                    .filter(i -> i.getId() == activityFlow.getEventStart().getId())
+                    .findFirst()
+                    .get();
+            //activityFlow.getEventEnd().getId()
+            vertexList.stream()
+                    .filter(i -> i.getId() == activityFlow.getEventEnd().getId())
+                    .findFirst()
+                    .get();
+
+
+            Edge edge = new Edge(
+                activityFlow.getActivity().getId(),
+                activityFlow.getActivity().getName(),
+                activityFlow.getActivity().getDuration(),
+                vertexList.stream()
+                        .filter(i -> i.getId() == activityFlow.getEventStart().getId())
+                        .findFirst()
+                        .get(),
+                vertexList.stream()
+                        .filter(i -> i.getId() == activityFlow.getEventEnd().getId())
+                        .findFirst()
+                        .get()
+            );
+
+            vertexList.stream()
+                    .filter(i -> i.getId() == activityFlow.getEventStart().getId())
+                    .findFirst()
+                    .get()
+                    .addEdge(edge);
         }
 
-        List<Vertex> verticesList = new ArrayList<>();
-
-        Vertex a = new Vertex("A");
-        Vertex b = new Vertex("B");
-        Vertex c = new Vertex("C");
-        Vertex d = new Vertex("D");
-        Vertex e = new Vertex("E");
-
-        Edge ab = new Edge(a, b, 1);
-        Edge ac = new Edge(a, c, 2);
-        Edge bc = new Edge(b, c, 3);
-        Edge cd = new Edge(c, d, 4);
-        Edge de = new Edge(d, e, 5);
-
-
-        a.addEdge(ab);
-        a.addEdge(ac);
-        b.addEdge(bc);
-        c.addEdge(cd);
-        d.addEdge(de);
-
-        Graph graph = new Graph();
-        graph.addVertex(a);
-        graph.addVertex(b);
-        graph.addVertex(c);
-        graph.addVertex(d);
-        graph.addVertex(e);
-
-        List<List<Vertex>> paths = graph.findAllPaths(a, e);
+        Graph graph = new Graph(vertexList);
+        List<List<Vertex>> paths = graph.findAllPaths(
+                vertexList.stream()
+                        .filter(i -> i.getId() == 1)
+                        .findFirst()
+                        .get(),
+                vertexList.stream()
+            .filter(i -> i.getId() == vertexList.size() - 1)
+                        .findFirst()
+                        .get());
 
         for (List<Vertex> path : paths) {
             path.forEach(i -> System.out.print(i.__toString()));
@@ -85,11 +91,57 @@ public class Main {
 
 
 
+//        for (ActivityFlow activityFlow : graphCreator.getActivityFlowList()) {
+//            if (!vertices.contains(activityFlow.getEventStart())) {
+//                vertices.add(activityFlow.getEventStart());
+//            }
+//            if (activityFlow.getEventEnd() != null && !vertices.contains(activityFlow.getEventEnd())) {
+//                vertices.add(activityFlow.getEventEnd());
+//            }
+//
+//            if (activityFlow.getEventEnd() != null) {
+//                edges.add(new Activity(
+//                        activityFlow.getActivity().getId(),
+//                        activityFlow.getActivity().getName(),
+//                        activityFlow.getEventStart().getId() + "",
+//                        activityFlow.getActivity().getDuration()
+//                ));
+//            }
+//        }
 
-
-
-
-
+//        List<Vertex> verticesList = new ArrayList<>();
+//
+//        Vertex a = new Vertex(1);
+//        Vertex b = new Vertex(2);
+//        Vertex c = new Vertex(3);
+//        Vertex d = new Vertex(4);
+//        Vertex e = new Vertex(5);
+//
+//        Edge ab = new Edge("A", "sv A", 1, a, b);
+//        Edge ac = new Edge("A", "sv A",1, a, c);
+//        Edge bc = new Edge("B", "sv B",2, b, c);
+//        Edge cd = new Edge("C", "sv C",3, c, d);
+//        Edge de = new Edge("D", "sv D",4, d, e);
+//
+//        a.addEdge(ab);
+//        a.addEdge(ac);
+//        b.addEdge(bc);
+//        c.addEdge(cd);
+//        d.addEdge(de);
+//
+//        Graph graph = new Graph();
+//        graph.addVertex(a);
+//        graph.addVertex(b);
+//        graph.addVertex(c);
+//        graph.addVertex(d);
+//        graph.addVertex(e);
+//
+//        List<List<Vertex>> paths = graph.findAllPaths(a, e);
+//
+//        for (List<Vertex> path : paths) {
+//            path.forEach(i -> System.out.print(i.__toString()));
+//            System.out.println();
+//        }
 
         //        DirectedGraph graph = new DirectedGraph(5);
         //        graph.addVertex(new Vertex(0, "A"));

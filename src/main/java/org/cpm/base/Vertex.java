@@ -11,11 +11,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Vertex {
-    private String name;
+    private int id;
     private List<Edge> edges = new ArrayList<>();
 
-    public Vertex(String name) {
-        this.name = name;
+    public Vertex(int id) {
+        this.id = id;
     }
 
     public void addEdge(Edge edge) {
@@ -25,13 +25,13 @@ public class Vertex {
     @Override
     public String toString() {
         return "Vertex{" +
-                "name='" + name + '\'' +
+                "id='" + id + '\'' +
                 ", edges=" + edges +
                 '}';
     }
 
     public String _toString() {
-        String str = "Ver " + name + ", edges=[";
+        String str = "Ver " + id + ", edges=[";
         for (Edge edge : edges) {
             str += edge._toString() + ", ";
         }
@@ -40,6 +40,6 @@ public class Vertex {
     }
 
     public String __toString() {
-        return "Ver " + name + " ";
+        return "Ver " + id + " ";
     }
 }
