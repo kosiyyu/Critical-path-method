@@ -30,13 +30,11 @@ public class Main {
         graphCreator.getActivityFlowList();
 
         GraphCreator.Pair pair = graphCreator.getPair();
-        System.out.println(pair.getActivityList().size());
-        System.out.println(pair.getEventList().size());
 
         //First we add all vertexes to vertexList
         List<Vertex> vertexList = new ArrayList<>();
         pair.getEventList().forEach(event -> vertexList.add(new Vertex(event.getId())));
-        vertexList.add(new Vertex(vertexList.size()));
+        //vertexList.add(new Vertex(vertexList.size()));
 
         //Then add all edges to vertexes in vertexList
         for (ActivityFlow activityFlow : graphCreator.getActivityFlowList()) {
@@ -80,9 +78,11 @@ public class Main {
                         .findFirst()
                         .get(),
                 vertexList.stream()
-            .filter(i -> i.getId() == vertexList.size() - 1)
+            .filter(i -> i.getId() == vertexList.size())
                         .findFirst()
                         .get());
+
+        graph.getVertices().forEach(i -> System.out.println(i._toString()));
 
         for (List<Vertex> path : paths) {
             path.forEach(i -> System.out.print(i.__toString()));
