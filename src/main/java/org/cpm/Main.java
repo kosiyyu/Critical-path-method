@@ -72,6 +72,8 @@ public class Main {
         }
 
         Graph graph = new Graph(vertexList);
+        graph.calculateCost();
+
         List<List<Vertex>> paths = graph.findAllPaths(
                 vertexList.stream()
                         .filter(i -> i.getId() == 1)
@@ -89,7 +91,9 @@ public class Main {
             System.out.println();
         }
 
-
+        System.out.println("Critical path");
+        List<Vertex> criticalPath = graph.findCPM(paths);
+        criticalPath.forEach(i -> System.out.print(i.__toString()));
 
 //        for (ActivityFlow activityFlow : graphCreator.getActivityFlowList()) {
 //            if (!vertices.contains(activityFlow.getEventStart())) {
