@@ -1,29 +1,23 @@
 import * as THREE from 'three'
 import React, {useEffect, useState}  from 'react'
 import { ForceGraph2D } from 'react-force-graph'
-import {getData} from "./API";
-
-async function fetchData() {
-  const data = await getData().catch(console.log)
-  console.log(data)
-  return data
-}
+import {getData} from "./API"
 
 const Graph = () => {
 
-  const [data, setData] = useState({nodes: [], links: []});
+  const [data, setData] = useState({nodes: [], links: []})
 
   useEffect(() => {
     async function fetchData() {
-      const result = await getData().catch(console.log);
-      setData(result);
+      const result = await getData().catch(console.log)
+      setData(result)
     }
 
-    fetchData();
-  }, []);
+    fetchData()
+  }, [])
 
-  const nodes = data.nodes;
-  const links = data.links;
+  const nodes = data.nodes
+  const links = data.links
 
   // const nodes = [
   //   {id: 1, name: 'Node1', type: '#1FED75'},
