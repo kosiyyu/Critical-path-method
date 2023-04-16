@@ -116,7 +116,13 @@ public class MatrixOfPredecessors {
         return quantityOfPredecessorActivities;
     }
 
-
-
-
+    public boolean findQuantityOfNoPredecessorActivitiesColumn(int col){
+        List<Integer> quantityOfPredecessorActivities = new ArrayList<>();
+        for(int i = 0; i < matrix[0].length; i++ )
+        {
+            if(matrix[i][col] == 1)
+                return false;
+        }
+        return true;
+    }
 }

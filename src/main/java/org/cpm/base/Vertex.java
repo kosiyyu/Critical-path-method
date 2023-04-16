@@ -25,6 +25,10 @@ public class Vertex {
 
     public Vertex(int id) {
         this.id = id;
+        //this.ES = 0.0;
+        //this.EF = 0.0;
+        //this.LS = 0.0;
+        //this.LF = 0.0;
     }
 
     public Edge findSuitableEdge()

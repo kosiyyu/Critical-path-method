@@ -5,6 +5,7 @@ import org.cpm.logic.GraphCreator;
 import org.cpm.logic.MatrixOfPredecessors;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Main {
@@ -12,20 +13,60 @@ public class Main {
 
         List<Activity> activities = new ArrayList<>();
 
-        activities.add(new Activity("A", "opracowanie zalozen konstrukcyjnych", "-", 5));
-        activities.add(new Activity("B", "analiza propozycji uruchomienia nowej produkcji", "-", 7));
-        activities.add(new Activity("C", "sporzadzenie projektow technicznych podzespolow", "A", 6));
-        activities.add(new Activity("D", "zamowienie materialow", "A", 8));
-        activities.add(new Activity("E", "analiza popytu", "B", 3));
-        activities.add(new Activity("F", "budowa prototypu", "C", 4));
-        activities.add(new Activity("G", "sporzadzenie dokumentacji", "C", 2));
-        activities.add(new Activity("H", "pierwsza partia produkcji seryjnej", "E,D,F", 5));
+//        activities.add(new Activity("A", "opracowanie zalozen konstrukcyjnych", "-", 5));
+//        activities.add(new Activity("B", "analiza propozycji uruchomienia nowej produkcji", "-", 7));
+//        activities.add(new Activity("C", "sporzadzenie projektow technicznych podzespolow", "A", 6));
+//        activities.add(new Activity("D", "zamowienie materialow", "A", 8));
+//        activities.add(new Activity("E", "analiza popytu", "B", 3));
+//        activities.add(new Activity("F", "budowa prototypu", "C", 4));
+//        activities.add(new Activity("G", "sporzadzenie dokumentacji", "C", 2));
+//        activities.add(new Activity("H", "pierwsza partia produkcji seryjnej", "E,D,F", 5));
+        activities.add(new Activity("A", "opracowanie zalozen konstrukcyjnych", "-", 3));
+        activities.add(new Activity("B", "analiza propozycji uruchomienia nowej produkcji", "A", 2));
+        activities.add(new Activity("C", "sporzadzenie projektow technicznych podzespolow", "B", 4));
+        activities.add(new Activity("D", "zamowienie materialow", "A", 5));
+        activities.add(new Activity("E", "analiza popytu", "C,D", 7));
+        activities.add(new Activity("F", "budowa prototypu", "C,D", 10));
+        activities.add(new Activity("G", "sporzadzenie dokumentacji", "E,F", 5));
+        activities.add(new Activity("H", "pierwsza partia produkcji seryjnej", "E,F", 7));
+        activities.add(new Activity("I", "analiza propozycji uruchomienia nowej produkcji", "G,H", 8));
+        activities.add(new Activity("J", "sporzadzenie projektow technicznych podzespolow", "I", 3));
+        activities.add(new Activity("K", "zamowienie materialow", "J", 8));
+        activities.add(new Activity("L", "analiza popytu", "J", 3));
+        activities.add(new Activity("M", "budowa prototypu", "J", 2));
+        activities.add(new Activity("N", "sporzadzenie dokumentacji", "K,L,M", 7));
+        activities.add(new Activity("O", "pierwsza partia produkcji seryjnej", "C,D", 5));
+        activities.add(new Activity("P", "opracowanie zalozen konstrukcyjnych", "O", 10));
+        activities.add(new Activity("Q", "analiza propozycji uruchomienia nowej produkcji", "P", 10));
+        activities.add(new Activity("R", "sporzadzenie projektow technicznych podzespolow", "I", 17));
+        activities.add(new Activity("S", "zamowienie materialow", "Q", 5));
+        activities.add(new Activity("T", "analiza popytu", "S", 1));
+        activities.add(new Activity("U", "budowa prototypu", "N,T", 30));
+        activities.add(new Activity("V", "sporzadzenie dokumentacji", "R,U", 10));
+        activities.add(new Activity("W", "pierwsza partia produkcji seryjnej", "R,U", 8));
+        activities.add(new Activity("X", "opracowanie zalozen konstrukcyjnych", "W,V", 15));
+        activities.add(new Activity("Y", "analiza propozycji uruchomienia nowej produkcji", "X", 23));
 
         ActivitiesList activitiesUser = new ActivitiesList(activities);
 
         MatrixOfPredecessors matrixOfPredecessors = new MatrixOfPredecessors(activitiesUser.getActivities());
-
+//        activitiesUser.getActivities().stream().forEach(a -> {
+//            System.out.println(a.toString());
+//        });
+//        matrixOfPredecessors.printMatrix();
         GraphCreator graphCreator = new GraphCreator();
+        activitiesUser = graphCreator.findApparentActvities(activitiesUser, matrixOfPredecessors);
+//        activitiesUser.getActivities().stream().forEach(a -> {
+//            System.out.println(a.toString());
+//        });
+        matrixOfPredecessors = new MatrixOfPredecessors(activitiesUser.getActivities());
+//        matrixOfPredecessors.printMatrix();
+        activitiesUser = graphCreator.refactorApparentActivities(activitiesUser, matrixOfPredecessors);
+        activitiesUser.getActivities().stream().forEach(a -> {
+            System.out.println(a.toString());
+        });
+        matrixOfPredecessors = new MatrixOfPredecessors(activitiesUser.getActivities());
+        matrixOfPredecessors.printMatrix();
         graphCreator.logic(activitiesUser, matrixOfPredecessors);
         graphCreator.getActivityFlowList();
 
@@ -72,8 +113,8 @@ public class Main {
         }
 
         Graph graph = new Graph(vertexList);
+        //graph.getVertices().forEach(i -> System.out.println(i._toString()));
         graph.calculateCost();
-
         List<List<Vertex>> paths = graph.findAllPaths(
                 vertexList.stream()
                         .filter(i -> i.getId() == 1)
