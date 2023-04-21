@@ -103,7 +103,7 @@ public class GraphCreator {
         return listActivitiesWithApparent;
     }
 
-    public ActivitiesList refactorApparentActivities(ActivitiesList activitiesList, MatrixOfPredecessors matrixOfPredecessors)
+    public ActivitiesList refactorApparentActivities(ActivitiesList activitiesList, MatrixOfPredecessors matrixOfPredecessors, int countActivitiesWithoutApparentActivities)
     {
         List<Activity> tmpActivities = new ArrayList<>();
         List<Activity> resultAcitvityListWhihoutAdditionalApparentActivity = new ArrayList<>();
@@ -112,7 +112,7 @@ public class GraphCreator {
             resultAcitvityListWhihoutAdditionalApparentActivity.add(activity);
         }
         //List<Integer> emptyApparentActivities = new ArrayList<>();
-        for(int indexColumn = 0 ; indexColumn < matrixOfPredecessors.getMatrix().length; indexColumn++)
+        for(int indexColumn = countActivitiesWithoutApparentActivities ; indexColumn < matrixOfPredecessors.getMatrix().length; indexColumn++)
         {
             if(matrixOfPredecessors.findQuantityOfNoPredecessorActivitiesColumn(indexColumn) == true)
             {
@@ -121,6 +121,10 @@ public class GraphCreator {
                 //emptyApparentActivities.add(indexColumn);
             }
 
+        }
+        for(Activity activity : tmpActivities)
+        {
+            System.out.println(activity._toString());
         }
         Activity activityToRemove;
         char finalId = 'A';

@@ -50,7 +50,7 @@ public class Graph {
         }
         else if(stepAheadEdge.getTarget().getEF() != null)
         {
-//            System.out.println("Ver Target: " + stepAheadEdge.getTarget().getId() + " proposal new EF: " + stepAheadEdge.getSource().getEF() + stepAheadEdge.getNumericalValue());
+            System.out.println("Ver Target: " + stepAheadEdge.getTarget().getId() + " proposal new EF: " + stepAheadEdge.getSource().getEF() + stepAheadEdge.getNumericalValue());
             if(stepAheadEdge.getTarget().getEF() < stepAheadEdge.getSource().getEF() + stepAheadEdge.getNumericalValue())
             {
 //                System.out.println("Ver Target win: " + stepAheadEdge.getTarget().getId() + " new EF: " + stepAheadEdge.getSource().getEF() + stepAheadEdge.getNumericalValue());
@@ -208,13 +208,17 @@ public class Graph {
             List<Vertex> verticesConnectToVertex = new ArrayList<>();
             for(Vertex vertex1 : vertices)
             {
-                for(Edge finalEdge : vertex1.getEdges())
+                if(vertex1.getId() != 1)
                 {
-                    if(finalEdge.getTarget().getId() == idVertex)
+                    for(Edge finalEdge : vertex1.getEdges())
                     {
-                        verticesConnectToVertex.add(vertex1);
+                        if(finalEdge.getTarget().getId() == idVertex)
+                        {
+                            verticesConnectToVertex.add(vertex1);
+                        }
                     }
                 }
+
             }
 //            System.out.println(vertex._toString());
             for(Vertex connectVertex : verticesConnectToVertex)

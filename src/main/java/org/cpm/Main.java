@@ -12,41 +12,50 @@ public class Main {
     public static void main(String[] args) {
 
         List<Activity> activities = new ArrayList<>();
-
+        // first length of matrix of predecessors
+        int predecessorsMatrixLengthWithoutApparentActivites;
+        // case 1
+        activities.add(new Activity("A", "opracowanie zalozen konstrukcyjnych", "-", 5));
+        activities.add(new Activity("B", "analiza propozycji uruchomienia nowej produkcji", "-", 7));
+        activities.add(new Activity("C", "sporzadzenie projektow technicznych podzespolow", "A", 6));
+        activities.add(new Activity("D", "zamowienie materialow", "A", 8));
+        activities.add(new Activity("E", "analiza popytu", "B", 3));
+        activities.add(new Activity("F", "budowa prototypu", "C", 4));
+        activities.add(new Activity("G", "sporzadzenie dokumentacji", "C", 2));
+        activities.add(new Activity("H", "pierwsza partia produkcji seryjnej", "E,D,F", 5));
+        //case 2
+//        activities.add(new Activity("A", "opracowanie zalozen konstrukcyjnych", "-", 3));
+//        activities.add(new Activity("B", "analiza propozycji uruchomienia nowej produkcji", "A", 2));
+//        activities.add(new Activity("C", "sporzadzenie projektow technicznych podzespolow", "B", 4));
+//        activities.add(new Activity("D", "zamowienie materialow", "A", 5));
+//        activities.add(new Activity("E", "analiza popytu", "C,D", 7));
+//        activities.add(new Activity("F", "budowa prototypu", "C,D", 10));
+//        activities.add(new Activity("G", "sporzadzenie dokumentacji", "E,F", 5));
+//        activities.add(new Activity("H", "pierwsza partia produkcji seryjnej", "E,F", 7));
+//        activities.add(new Activity("I", "analiza propozycji uruchomienia nowej produkcji", "G,H", 8));
+//        activities.add(new Activity("J", "sporzadzenie projektow technicznych podzespolow", "I", 3));
+//        activities.add(new Activity("K", "zamowienie materialow", "J", 8));
+//        activities.add(new Activity("L", "analiza popytu", "J", 3));
+//        activities.add(new Activity("M", "budowa prototypu", "J", 2));
+//        activities.add(new Activity("N", "sporzadzenie dokumentacji", "K,L,M", 7));
+//        activities.add(new Activity("O", "pierwsza partia produkcji seryjnej", "C,D", 5));
+//        activities.add(new Activity("P", "opracowanie zalozen konstrukcyjnych", "O", 10));
+//        activities.add(new Activity("Q", "analiza propozycji uruchomienia nowej produkcji", "P", 10));
+//        activities.add(new Activity("R", "sporzadzenie projektow technicznych podzespolow", "I", 17));
+//        activities.add(new Activity("S", "zamowienie materialow", "Q", 5));
+//        activities.add(new Activity("T", "analiza popytu", "S", 1));
+//        activities.add(new Activity("U", "budowa prototypu", "N,T", 30));
+//        activities.add(new Activity("V", "sporzadzenie dokumentacji", "R,U", 10));
+//        activities.add(new Activity("W", "pierwsza partia produkcji seryjnej", "R,U", 8));
+//        activities.add(new Activity("X", "opracowanie zalozen konstrukcyjnych", "W,V", 15));
+//        activities.add(new Activity("Y", "analiza propozycji uruchomienia nowej produkcji", "X", 23));
+//      case 3
 //        activities.add(new Activity("A", "opracowanie zalozen konstrukcyjnych", "-", 5));
-//        activities.add(new Activity("B", "analiza propozycji uruchomienia nowej produkcji", "-", 7));
-//        activities.add(new Activity("C", "sporzadzenie projektow technicznych podzespolow", "A", 6));
-//        activities.add(new Activity("D", "zamowienie materialow", "A", 8));
-//        activities.add(new Activity("E", "analiza popytu", "B", 3));
-//        activities.add(new Activity("F", "budowa prototypu", "C", 4));
-//        activities.add(new Activity("G", "sporzadzenie dokumentacji", "C", 2));
-//        activities.add(new Activity("H", "pierwsza partia produkcji seryjnej", "E,D,F", 5));
-        activities.add(new Activity("A", "opracowanie zalozen konstrukcyjnych", "-", 3));
-        activities.add(new Activity("B", "analiza propozycji uruchomienia nowej produkcji", "A", 2));
-        activities.add(new Activity("C", "sporzadzenie projektow technicznych podzespolow", "B", 4));
-        activities.add(new Activity("D", "zamowienie materialow", "A", 5));
-        activities.add(new Activity("E", "analiza popytu", "C,D", 7));
-        activities.add(new Activity("F", "budowa prototypu", "C,D", 10));
-        activities.add(new Activity("G", "sporzadzenie dokumentacji", "E,F", 5));
-        activities.add(new Activity("H", "pierwsza partia produkcji seryjnej", "E,F", 7));
-        activities.add(new Activity("I", "analiza propozycji uruchomienia nowej produkcji", "G,H", 8));
-        activities.add(new Activity("J", "sporzadzenie projektow technicznych podzespolow", "I", 3));
-        activities.add(new Activity("K", "zamowienie materialow", "J", 8));
-        activities.add(new Activity("L", "analiza popytu", "J", 3));
-        activities.add(new Activity("M", "budowa prototypu", "J", 2));
-        activities.add(new Activity("N", "sporzadzenie dokumentacji", "K,L,M", 7));
-        activities.add(new Activity("O", "pierwsza partia produkcji seryjnej", "C,D", 5));
-        activities.add(new Activity("P", "opracowanie zalozen konstrukcyjnych", "O", 10));
-        activities.add(new Activity("Q", "analiza propozycji uruchomienia nowej produkcji", "P", 10));
-        activities.add(new Activity("R", "sporzadzenie projektow technicznych podzespolow", "I", 17));
-        activities.add(new Activity("S", "zamowienie materialow", "Q", 5));
-        activities.add(new Activity("T", "analiza popytu", "S", 1));
-        activities.add(new Activity("U", "budowa prototypu", "N,T", 30));
-        activities.add(new Activity("V", "sporzadzenie dokumentacji", "R,U", 10));
-        activities.add(new Activity("W", "pierwsza partia produkcji seryjnej", "R,U", 8));
-        activities.add(new Activity("X", "opracowanie zalozen konstrukcyjnych", "W,V", 15));
-        activities.add(new Activity("Y", "analiza propozycji uruchomienia nowej produkcji", "X", 23));
-
+//        activities.add(new Activity("C", "sporzadzenie projektow technicznych podzespolow", "-", 4));
+//        activities.add(new Activity("B", "analiza propozycji uruchomienia nowej produkcji", "A", 3));
+//        activities.add(new Activity("D", "zamowienie materialow", "A", 6));
+//        activities.add(new Activity("E", "analiza popytu", "D", 4));
+//        activities.add(new Activity("F", "budowa prototypu", "B,C,D", 3));
         ActivitiesList activitiesUser = new ActivitiesList(activities);
 
         MatrixOfPredecessors matrixOfPredecessors = new MatrixOfPredecessors(activitiesUser.getActivities());
@@ -54,6 +63,7 @@ public class Main {
 //            System.out.println(a.toString());
 //        });
 //        matrixOfPredecessors.printMatrix();
+        predecessorsMatrixLengthWithoutApparentActivites = matrixOfPredecessors.getMatrix().length;
         GraphCreator graphCreator = new GraphCreator();
         activitiesUser = graphCreator.findApparentActvities(activitiesUser, matrixOfPredecessors);
 //        activitiesUser.getActivities().stream().forEach(a -> {
@@ -61,7 +71,7 @@ public class Main {
 //        });
         matrixOfPredecessors = new MatrixOfPredecessors(activitiesUser.getActivities());
 //        matrixOfPredecessors.printMatrix();
-        activitiesUser = graphCreator.refactorApparentActivities(activitiesUser, matrixOfPredecessors);
+        activitiesUser = graphCreator.refactorApparentActivities(activitiesUser, matrixOfPredecessors, predecessorsMatrixLengthWithoutApparentActivites);
         activitiesUser.getActivities().stream().forEach(a -> {
             System.out.println(a.toString());
         });
@@ -113,7 +123,7 @@ public class Main {
         }
 
         Graph graph = new Graph(vertexList);
-        //graph.getVertices().forEach(i -> System.out.println(i._toString()));
+        graph.getVertices().forEach(i -> System.out.println(i._toString()));
         graph.calculateCost();
         List<List<Vertex>> paths = graph.findAllPaths(
                 vertexList.stream()
