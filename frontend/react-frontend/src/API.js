@@ -8,3 +8,16 @@ export const getData = () => {
             console.log(error)
         });
 }
+
+export const sendRequestForCPM = (data) => {
+    return axios.post(`${API_BASE_URL}`, data, {
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json;charset=UTF-8"
+        }
+    })        
+    .then(response => response.data)
+    .catch(error => {
+        console.log(error)
+    });
+}
