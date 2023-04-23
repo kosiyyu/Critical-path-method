@@ -2,7 +2,7 @@ import { useState, Fragment } from 'react';
 import  ReadOnlyRecord  from './ReadOnlyRecord'
 import  EditableRecord  from './EditableRecord'
 import {sendRequestForCPM} from './API'
-const Form = () => {
+const Form = ({func}) => {
     const returnNextCharacter = function(c) {
         return  String.fromCharCode(c.charCodeAt() + 1);
     }
@@ -298,7 +298,7 @@ const Form = () => {
     async function calcCPM() {
         const activitesList = [...fullActivityList];
         console.log(convertToJson(activitesList));
-        const resolveData = await sendRequestForCPM(convertToJson(activitesList)).then(data => console.log(data)).catch(console.log);
+        const resolveData = await sendRequestForCPM(convertToJson(activitesList)).then(data => func(data)).catch(console.log);
     }
 
     
