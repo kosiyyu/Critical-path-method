@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-class Link {
+public class Link {
     private int source;
     private int target;
     private String name;
