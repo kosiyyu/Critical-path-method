@@ -124,6 +124,24 @@ public class DataService {
 
         nodes.forEach(System.out::println);
 
+//        List<Link> links = new ArrayList<>();
+//        for (ActivityFlow activityFlow : graphCreator.getActivityFlowList()) {
+//            Edge edge = new Edge(
+//                    activityFlow.getActivity().getId(),
+//                    activityFlow.getActivity().getName(),
+//                    activityFlow.getActivity().getDuration(),
+//                    vertexList.stream()
+//                            .filter(i -> i.getId() == activityFlow.getEventStart().getId())
+//                            .findFirst()
+//                            .get(),
+//                    vertexList.stream()
+//                            .filter(i -> i.getId() == activityFlow.getEventEnd().getId())
+//                            .findFirst()
+//                            .get()
+//            );
+//            links.add(new Link(edge.getSource().getId(), edge.getTarget().getId(),Double.toString(edge.getNumericalValue()), (edge.getNumericalValue() == 0.0) ? "gray" : defaultColor));//(edge.getNumericalValue() == 0.0) ? "gray" : "black")
+//        }
+
         List<Link> links = new ArrayList<>();
         for (ActivityFlow activityFlow : graphCreator.getActivityFlowList()) {
             Edge edge = new Edge(
@@ -139,7 +157,20 @@ public class DataService {
                             .findFirst()
                             .get()
             );
-            links.add(new Link(edge.getSource().getId(), edge.getTarget().getId(),Double.toString(edge.getNumericalValue()), (edge.getNumericalValue() == 0.0) ? "gray" : defaultColor));//(edge.getNumericalValue() == 0.0) ? "gray" : "black")
+
+            Vertex sourceVertex = edge.getSource();
+            Vertex targetVertex = edge.getTarget();
+
+            boolean sourceInCP = criticalPath.contains(sourceVertex);
+            boolean targetInCP = criticalPath.contains(targetVertex);
+            int sourceIndex = criticalPath.indexOf(sourceVertex);
+            int targetIndex = criticalPath.indexOf(targetVertex);
+
+            if (sourceInCP && targetInCP && Math.abs(sourceIndex - targetIndex) == 1 && edge.getNumericalValue() != 0.0) {
+                links.add(new Link(sourceVertex.getId(), targetVertex.getId(), Double.toString(edge.getNumericalValue()), mediumColor));
+            } else {
+                links.add(new Link(sourceVertex.getId(), targetVertex.getId(), Double.toString(edge.getNumericalValue()), (edge.getNumericalValue() == 0.0) ? "gray" : defaultColor));
+            }
         }
 
 //            for (Link l : links) {
