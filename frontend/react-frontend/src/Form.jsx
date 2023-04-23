@@ -298,7 +298,7 @@ const Form = () => {
     async function calcCPM() {
         const activitesList = [...fullActivityList];
         console.log(convertToJson(activitesList));
-        const resolveData = await sendRequestForCPM(convertToJson).catch(console.log);
+        const resolveData = await sendRequestForCPM(convertToJson(activitesList)).then(data => console.log(data)).catch(console.log);
     }
 
     

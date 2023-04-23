@@ -7,7 +7,6 @@ function App() {
   return (
     <div className="App">
       <h2>Critical path method</h2>
-      <h2>--HERE FORM | TODO--</h2>
       <div>
         <Form />
         <div className="container">
