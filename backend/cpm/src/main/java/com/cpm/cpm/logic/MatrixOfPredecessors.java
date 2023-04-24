@@ -32,15 +32,18 @@ public class MatrixOfPredecessors {
             if (precedessors[0].trim().equalsIgnoreCase("-")) {
                 //matrix[index][pos] = -1;
                 //System.out.println("stop");
-                index++;
+                if(index + 1 < siz)
+                    index++;
                 continue;
             }
             for(int i = 0; i < precedessors.length; i++)
             {
+                System.out.println(i+" index: "+index+" pos: "+pos);
                 pos = (int)precedessors[i].charAt(0) - (int)'A';
                 matrix[index][pos] = 1;
             }
-            index++;
+            if(index + 1 < siz)
+                index++;
         }
     }
 

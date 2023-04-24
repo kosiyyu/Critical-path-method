@@ -51,7 +51,7 @@ public class DataController {
 //        String json = null;
 //
 //        try{
-//            json = objectMapper.writeValueAsString(dummyGraph);
+//            json = objectMapper.writeValueAsString(dataService.generate());//dummyGraph
 //        }catch (JsonProcessingException e){
 //
 //        }
@@ -68,6 +68,10 @@ public class DataController {
             activitiesList = Arrays.asList(objectMapper.readValue(activitiesJson, Activity[].class));
         } catch (JsonProcessingException e) {
             e.printStackTrace();
+        }
+        for(Activity activity : activitiesList)
+        {
+            System.out.println(activity);
         }
         dataService.generateGraph(activitiesList);
 

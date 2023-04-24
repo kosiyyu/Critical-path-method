@@ -214,10 +214,10 @@ const Form = ({func}) => {
             setFullActivityList(newFullActivityList);
             const newActivityId = activityCharList.add(newRecord.id);
             setActivityIdList(newActivityId);
-            const scheduledActivities = sortFirstActivitiesAndLastActivities(newFullActivityList);
-            const refactorActivities = refactorsIdAndActivityList(scheduledActivities);
-            refactorActivities.forEach(cur => {validateData(cur);})
-            setFullActivityList(refactorActivities);
+            // const scheduledActivities = sortFirstActivitiesAndLastActivities(newFullActivityList);
+            // const refactorActivities = refactorsIdAndActivityList(scheduledActivities);
+            // refactorActivities.forEach(cur => {validateData(cur);})
+            // setFullActivityList(refactorActivities);
             // setFullActivityList(scheduledActivities);
         }
         

@@ -20,7 +20,49 @@ public class DataService {
     private final String defaultColor = "black";
 
     public DataDto generateGraph(List<Activity> inputActivities) {
-
+//        List<Activity> activities = new ArrayList<>();
+//        // case 1
+////        activities.add(new Activity("A", "opracowanie zalozen konstrukcyjnych", "-", 5));
+////        activities.add(new Activity("B", "analiza propozycji uruchomienia nowej produkcji", "-", 7));
+////        activities.add(new Activity("C", "sporzadzenie projektow technicznych podzespolow", "A", 6));
+////        activities.add(new Activity("D", "zamowienie materialow", "A", 8));
+////        activities.add(new Activity("E", "analiza popytu", "B", 3));
+////        activities.add(new Activity("F", "budowa prototypu", "C", 4));
+////        activities.add(new Activity("G", "sporzadzenie dokumentacji", "C", 2));
+////        activities.add(new Activity("H", "pierwsza partia produkcji seryjnej", "E,D,F", 5));
+//        //case 2
+//        activities.add(new Activity("A", "opracowanie zalozen konstrukcyjnych", "-", 3));
+//        activities.add(new Activity("B", "analiza propozycji uruchomienia nowej produkcji", "A", 2));
+//        activities.add(new Activity("C", "sporzadzenie projektow technicznych podzespolow", "B", 4));
+//        activities.add(new Activity("D", "zamowienie materialow", "A", 5));
+//        activities.add(new Activity("E", "analiza popytu", "C,D", 7));
+//        activities.add(new Activity("F", "budowa prototypu", "C,D", 10));
+//        activities.add(new Activity("G", "sporzadzenie dokumentacji", "E,F", 5));
+//        activities.add(new Activity("H", "pierwsza partia produkcji seryjnej", "E,F", 7));
+//        activities.add(new Activity("I", "analiza propozycji uruchomienia nowej produkcji", "G,H", 8));
+//        activities.add(new Activity("J", "sporzadzenie projektow technicznych podzespolow", "I", 3));
+//        activities.add(new Activity("K", "zamowienie materialow", "J", 8));
+//        activities.add(new Activity("L", "analiza popytu", "J", 3));
+//        activities.add(new Activity("M", "budowa prototypu", "J", 2));
+//        activities.add(new Activity("N", "sporzadzenie dokumentacji", "K,L,M", 7));
+//        activities.add(new Activity("O", "pierwsza partia produkcji seryjnej", "C,D", 5));
+//        activities.add(new Activity("P", "opracowanie zalozen konstrukcyjnych", "O", 10));
+//        activities.add(new Activity("Q", "analiza propozycji uruchomienia nowej produkcji", "P", 10));
+//        activities.add(new Activity("R", "sporzadzenie projektow technicznych podzespolow", "I", 17));
+//        activities.add(new Activity("S", "zamowienie materialow", "Q", 5));
+//        activities.add(new Activity("T", "analiza popytu", "S", 1));
+//        activities.add(new Activity("U", "budowa prototypu", "N,T", 30));
+//        activities.add(new Activity("V", "sporzadzenie dokumentacji", "R,U", 10));
+//        activities.add(new Activity("W", "pierwsza partia produkcji seryjnej", "R,U", 8));
+//        activities.add(new Activity("X", "opracowanie zalozen konstrukcyjnych", "W,V", 15));
+//        activities.add(new Activity("Y", "analiza propozycji uruchomienia nowej produkcji", "X", 23));
+////      case 3
+////        activities.add(new Activity("A", "opracowanie zalozen konstrukcyjnych", "-", 5));
+////        activities.add(new Activity("B", "sporzadzenie projektow technicznych podzespolow", "-", 4));
+////        activities.add(new Activity("C", "analiza propozycji uruchomienia nowej produkcji", "A", 3));
+////        activities.add(new Activity("D", "zamowienie materialow", "A", 6));
+////        activities.add(new Activity("E", "analiza popytu", "D", 4));
+////        activities.add(new Activity("F", "budowa prototypu", "B,C,D", 3));
         List<Activity> activities = inputActivities;
 
         int predecessorsMatrixLengthWithoutApparentActivites;
@@ -124,6 +166,24 @@ public class DataService {
 
         nodes.forEach(System.out::println);
 
+//        List<Link> links = new ArrayList<>();
+//        for (ActivityFlow activityFlow : graphCreator.getActivityFlowList()) {
+//            Edge edge = new Edge(
+//                    activityFlow.getActivity().getId(),
+//                    activityFlow.getActivity().getName(),
+//                    activityFlow.getActivity().getDuration(),
+//                    vertexList.stream()
+//                            .filter(i -> i.getId() == activityFlow.getEventStart().getId())
+//                            .findFirst()
+//                            .get(),
+//                    vertexList.stream()
+//                            .filter(i -> i.getId() == activityFlow.getEventEnd().getId())
+//                            .findFirst()
+//                            .get()
+//            );
+//            links.add(new Link(edge.getSource().getId(), edge.getTarget().getId(),Double.toString(edge.getNumericalValue()), (edge.getNumericalValue() == 0.0) ? "gray" : defaultColor));//(edge.getNumericalValue() == 0.0) ? "gray" : "black")
+//        }
+
         List<Link> links = new ArrayList<>();
         for (ActivityFlow activityFlow : graphCreator.getActivityFlowList()) {
             Edge edge = new Edge(
@@ -139,7 +199,20 @@ public class DataService {
                             .findFirst()
                             .get()
             );
-            links.add(new Link(edge.getSource().getId(), edge.getTarget().getId(),Double.toString(edge.getNumericalValue()), (edge.getNumericalValue() == 0.0) ? "gray" : defaultColor));//(edge.getNumericalValue() == 0.0) ? "gray" : "black")
+
+            Vertex sourceVertex = edge.getSource();
+            Vertex targetVertex = edge.getTarget();
+
+            boolean sourceInCP = criticalPath.contains(sourceVertex);
+            boolean targetInCP = criticalPath.contains(targetVertex);
+            int sourceIndex = criticalPath.indexOf(sourceVertex);
+            int targetIndex = criticalPath.indexOf(targetVertex);
+
+            if (sourceInCP && targetInCP && Math.abs(sourceIndex - targetIndex) == 1 && edge.getNumericalValue() != 0.0) {
+                links.add(new Link(sourceVertex.getId(), targetVertex.getId(), Double.toString(edge.getNumericalValue()), mediumColor));
+            } else {
+                links.add(new Link(sourceVertex.getId(), targetVertex.getId(), Double.toString(edge.getNumericalValue()), (edge.getNumericalValue() == 0.0) ? "gray" : defaultColor));
+            }
         }
 
 //            for (Link l : links) {
@@ -152,6 +225,10 @@ public class DataService {
 
         DataDto dataDto = new DataDto(nodes, links);
         return dataDto;
+//END
+
+
+
     }
 
     public DataDto generate(){
@@ -169,38 +246,38 @@ public class DataService {
 //        activities.add(new Activity("G", "sporzadzenie dokumentacji", "C", 2));
 //        activities.add(new Activity("H", "pierwsza partia produkcji seryjnej", "E,D,F", 5));
         //case 2
-//        activities.add(new Activity("A", "opracowanie zalozen konstrukcyjnych", "-", 3));
-//        activities.add(new Activity("B", "analiza propozycji uruchomienia nowej produkcji", "A", 2));
-//        activities.add(new Activity("C", "sporzadzenie projektow technicznych podzespolow", "B", 4));
-//        activities.add(new Activity("D", "zamowienie materialow", "A", 5));
-//        activities.add(new Activity("E", "analiza popytu", "C,D", 7));
-//        activities.add(new Activity("F", "budowa prototypu", "C,D", 10));
-//        activities.add(new Activity("G", "sporzadzenie dokumentacji", "E,F", 5));
-//        activities.add(new Activity("H", "pierwsza partia produkcji seryjnej", "E,F", 7));
-//        activities.add(new Activity("I", "analiza propozycji uruchomienia nowej produkcji", "G,H", 8));
-//        activities.add(new Activity("J", "sporzadzenie projektow technicznych podzespolow", "I", 3));
-//        activities.add(new Activity("K", "zamowienie materialow", "J", 8));
-//        activities.add(new Activity("L", "analiza popytu", "J", 3));
-//        activities.add(new Activity("M", "budowa prototypu", "J", 2));
-//        activities.add(new Activity("N", "sporzadzenie dokumentacji", "K,L,M", 7));
-//        activities.add(new Activity("O", "pierwsza partia produkcji seryjnej", "C,D", 5));
-//        activities.add(new Activity("P", "opracowanie zalozen konstrukcyjnych", "O", 10));
-//        activities.add(new Activity("Q", "analiza propozycji uruchomienia nowej produkcji", "P", 10));
-//        activities.add(new Activity("R", "sporzadzenie projektow technicznych podzespolow", "I", 17));
-//        activities.add(new Activity("S", "zamowienie materialow", "Q", 5));
-//        activities.add(new Activity("T", "analiza popytu", "S", 1));
-//        activities.add(new Activity("U", "budowa prototypu", "N,T", 30));
-//        activities.add(new Activity("V", "sporzadzenie dokumentacji", "R,U", 10));
-//        activities.add(new Activity("W", "pierwsza partia produkcji seryjnej", "R,U", 8));
-//        activities.add(new Activity("X", "opracowanie zalozen konstrukcyjnych", "W,V", 15));
-//        activities.add(new Activity("Y", "analiza propozycji uruchomienia nowej produkcji", "X", 23));
+        activities.add(new Activity("A", "opracowanie zalozen konstrukcyjnych", "-", 3));
+        activities.add(new Activity("B", "analiza propozycji uruchomienia nowej produkcji", "A", 2));
+        activities.add(new Activity("C", "sporzadzenie projektow technicznych podzespolow", "B", 4));
+        activities.add(new Activity("D", "zamowienie materialow", "A", 5));
+        activities.add(new Activity("E", "analiza popytu", "C,D", 7));
+        activities.add(new Activity("F", "budowa prototypu", "C,D", 10));
+        activities.add(new Activity("G", "sporzadzenie dokumentacji", "E,F", 5));
+        activities.add(new Activity("H", "pierwsza partia produkcji seryjnej", "E,F", 7));
+        activities.add(new Activity("I", "analiza propozycji uruchomienia nowej produkcji", "G,H", 8));
+        activities.add(new Activity("J", "sporzadzenie projektow technicznych podzespolow", "I", 3));
+        activities.add(new Activity("K", "zamowienie materialow", "J", 8));
+        activities.add(new Activity("L", "analiza popytu", "J", 3));
+        activities.add(new Activity("M", "budowa prototypu", "J", 2));
+        activities.add(new Activity("N", "sporzadzenie dokumentacji", "K,L,M", 7));
+        activities.add(new Activity("O", "pierwsza partia produkcji seryjnej", "C,D", 5));
+        activities.add(new Activity("P", "opracowanie zalozen konstrukcyjnych", "O", 10));
+        activities.add(new Activity("Q", "analiza propozycji uruchomienia nowej produkcji", "P", 10));
+        activities.add(new Activity("R", "sporzadzenie projektow technicznych podzespolow", "I", 17));
+        activities.add(new Activity("S", "zamowienie materialow", "Q", 5));
+        activities.add(new Activity("T", "analiza popytu", "S", 1));
+        activities.add(new Activity("U", "budowa prototypu", "N,T", 30));
+        activities.add(new Activity("V", "sporzadzenie dokumentacji", "R,U", 10));
+        activities.add(new Activity("W", "pierwsza partia produkcji seryjnej", "R,U", 8));
+        activities.add(new Activity("X", "opracowanie zalozen konstrukcyjnych", "W,V", 15));
+        activities.add(new Activity("Y", "analiza propozycji uruchomienia nowej produkcji", "X", 23));
 //      case 3
-        activities.add(new Activity("A", "opracowanie zalozen konstrukcyjnych", "-", 5));
-        activities.add(new Activity("B", "sporzadzenie projektow technicznych podzespolow", "-", 4));
-        activities.add(new Activity("C", "analiza propozycji uruchomienia nowej produkcji", "A", 3));
-        activities.add(new Activity("D", "zamowienie materialow", "A", 6));
-        activities.add(new Activity("E", "analiza popytu", "D", 4));
-        activities.add(new Activity("F", "budowa prototypu", "B,C,D", 3));
+//        activities.add(new Activity("A", "opracowanie zalozen konstrukcyjnych", "-", 5));
+//        activities.add(new Activity("B", "sporzadzenie projektow technicznych podzespolow", "-", 4));
+//        activities.add(new Activity("C", "analiza propozycji uruchomienia nowej produkcji", "A", 3));
+//        activities.add(new Activity("D", "zamowienie materialow", "A", 6));
+//        activities.add(new Activity("E", "analiza popytu", "D", 4));
+//        activities.add(new Activity("F", "budowa prototypu", "B,C,D", 3));
         ActivitiesList activitiesUser = new ActivitiesList(activities);
 
         MatrixOfPredecessors matrixOfPredecessors = new MatrixOfPredecessors(activitiesUser.getActivities());
